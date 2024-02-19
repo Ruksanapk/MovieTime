@@ -1,0 +1,46 @@
+
+{% include 'base.html' %}
+
+{% block content %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<style>  a {
+  text-decoration: none;
+  color: black;
+}</style>
+<br>
+<br>
+<br>
+<br>
+<h2 style="color: white; margin-left: 10px; padding:10px; inline-size: 1270px;">Favorites</h2>
+<hr>
+
+{% if favorite_movies %}
+  <ul style="color: white; list-style: none;">
+    {% for movie in favorite_movies %}
+      <li style="padding:10px; inline-size: 1270px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;background-color: grey;padding:5px">
+          <div>
+            <a href="{% url 'movie_detail' movie.id %}">{{ movie.title }}</a>
+            <p>{{ movie.description }}</p>
+          </div>
+          
+          {% if movie.is_favorite %}
+            <form method="post" action="{% url 'movie_detail' movie.id %}" style="display: inline;">
+              {% csrf_token %}
+              <button type="submit" name="remove_from_favorites"><i class="glyphicon glyphicon-remove" style="color: black;padding: 10px;"></i></button>
+            </form>
+          {% else %}
+            <form method="post" action="{% url 'movie_detail' movie.id %}">
+              {% csrf_token %}
+              <button type="submit" name="add_to_favorites">Add to Favorites</button>
+            </form>
+          {% endif %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>No favorite movies yet.</p>
+{% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% include 'base.html' %}
+
+{% block content %}
+<style>
+    a{
+        text-decoration: none;
+        color: antiquewhite;
+        font-size: large;
+        font-family: 'Poppins', sans-serif; 
+    }
+
+</style>
+<br>
+<br>
+<br>
+  <h2 style="color: antiquewhite;">Search Results for "{{ query }}"</h2>
+  {% if movies %}
+    <ul>
+      {% for movie in movies %}
+        <li class="list-group-item mb-4" style="background-color: darkgreen; display: inline;"><a href="{% url 'movie_detail' movie.id %}">{{ movie.title }}</a></li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No results found.</p>
+  {% endif %}
+{% endblock %}
